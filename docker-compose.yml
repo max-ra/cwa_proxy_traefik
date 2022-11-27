@@ -1,0 +1,30 @@
+version: '3.9'
+
+networks:
+  proxy:
+    name: cwa_proxy_default
+
+services:
+  proxy:
+    image: traefik:v2.9
+    restart: always
+    container_name: reverse_proxy
+      #command:
+      #- "--providers.file.filename=/traefik.ddyml" 
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=cwa_proxy_default
+      - traefik.http.routers.traefik.tls=true
+      - traefik.http.routers.traefik.rule=Host("traefik.rauch.lan")
+      - traefik.http.routers.traefik.service=traefik-dashboard
+      - traefik.http.services.traefik-dashboard.loadbalancer.server.port=8080
+    ports:
+      - "80:80"
+      - "443:443" 
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./traefik/traefik.yml:/etc/traefik/traefik.yml:ro"
+      - "./traefik/config.yml:/etc/traefik/config.yml:ro"
+      - "./traefik/certs:/etc/certs:ro"
+    networks:
+      - proxy

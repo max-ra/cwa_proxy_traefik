@@ -1,0 +1,109 @@
+################################################################
+#
+# Configuration sample for Traefik v2.
+#
+# Custom Base template for CWA Applications (MRA 04.11.2022)
+#
+################################################################
+
+################################################################
+# Global configuration
+################################################################
+global:
+  checkNewVersion: false 
+  sendAnonymousUsage: false
+
+################################################################
+# EntryPoints configuration
+# Enable HTTP and HTTPS redirekt to HTTPS
+################################################################
+
+entryPoints:
+  http:
+    address: ":80"
+
+  https:
+    address: ":443"
+
+################################################################
+# Traefik logs configuration
+################################################################
+
+# Traefik logs
+# Enabled by default and log to stdout
+#
+# Optional
+#
+log:
+  level: WARN 
+  format: common
+
+
+################################################################
+# Access logs configuration
+################################################################
+
+# Enable access logs
+# By default it will write to stdout and produce logs in the textual
+# Common Log Format (CLF), extended with additional fields.
+#
+# Optional
+#
+accessLog:
+  # Sets the file path for the access log. If not specified, stdout will be used.
+  # Intermediate directories are created if necessary.
+  #
+  # Optional
+  # Default: os.Stdout
+  #
+#  filePath: /path/to/log/log.txt
+
+  # Format is either "json" or "common".
+  #
+  # Optional
+  # Default: "common"
+  #
+#  format: json
+
+################################################################
+# API and dashboard configuration
+################################################################
+
+api:
+  insecure: true
+  dashboard: true 
+
+################################################################
+# Ping configuration
+################################################################
+
+# Enable ping
+#ping:
+  # Name of the related entry point
+  #
+  # Optional
+  # Default: "traefik"
+  #
+#  entryPoint: traefik
+
+################################################################
+# Docker configuration backend 
+# Traefik File backend for rerouting Dashboard traffic
+################################################################
+
+providers:
+  docker:
+    exposedByDefault: false
+    watch: true
+    network: proxy
+
+      #  file:
+      #filename: /etc/traefik/config.yml
+      #watch: true
+      #
+#####
+# Server Transport setup
+####
+
+serversTransport:
+  insecureSkipVerify: true
