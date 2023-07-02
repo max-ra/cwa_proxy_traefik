@@ -15,7 +15,7 @@ services:
       - traefik.enable=true
       - traefik.docker.network=cwa_proxy_default
       - traefik.http.routers.traefik.tls=true
-      - traefik.http.routers.traefik.rule=Host("traefik.rauch.lan")
+      - traefik.http.routers.traefik.rule=Host("${APPLICATION_FQDN}")
       - traefik.http.routers.traefik.service=traefik-dashboard
       - traefik.http.services.traefik-dashboard.loadbalancer.server.port=8080
     ports:
