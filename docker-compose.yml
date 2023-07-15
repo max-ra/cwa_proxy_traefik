@@ -2,7 +2,8 @@ version: '3.9'
 
 networks:
   proxy:
-    name: cwa_proxy_default
+    name: backbone_proxy
+    external: true
 
 services:
   proxy:
