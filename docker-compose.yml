@@ -7,7 +7,7 @@ networks:
 
 services:
   proxy:
-    image: traefik:v2.9
+    image: traefik:v2.10.5
     restart: always
     container_name: reverse_proxy
       #command:
