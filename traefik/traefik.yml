@@ -100,7 +100,7 @@ providers:
   docker:
     exposedByDefault: false
     watch: true
-    network: "cwa_proxy_default"
+    network: "backbone_proxy"
 
       #  file:
       #filename: /etc/traefik/config.yml
