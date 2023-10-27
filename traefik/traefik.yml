@@ -112,3 +112,6 @@ providers:
 
 serversTransport:
   insecureSkipVerify: true
+
+metrics:
+  prometheus: {}
