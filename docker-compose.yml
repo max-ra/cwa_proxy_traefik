@@ -4,8 +4,8 @@ networks:
   proxy:
     name: backbone_proxy
     external: true
-  metrics:
-    name: backbone_metrics
+  monitoring:
+    name: backbone_monitoring
     external: true
 
 services:
@@ -33,4 +33,4 @@ services:
       - "./traefik/certs:/etc/certs:ro"
     networks:
       - proxy
-      - metrics
+      - monitoring
