@@ -4,6 +4,9 @@ networks:
   proxy:
     name: backbone_proxy
     external: true
+  metrics:
+    name: backbone_metrics
+    external: true
 
 services:
   proxy:
@@ -19,6 +22,8 @@ services:
       - traefik.http.routers.traefik.rule=Host("${APPLICATION_FQDN}")
       - traefik.http.routers.traefik.service=traefik-dashboard
       - traefik.http.services.traefik-dashboard.loadbalancer.server.port=8080
+      - prometheus.scrape=true
+      - prometheus.port=8080
     ports:
       - "80:80"
       - "443:443" 
@@ -28,3 +33,4 @@ services:
       - "./traefik/certs:/etc/certs:ro"
     networks:
       - proxy
+      - metrics
