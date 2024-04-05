@@ -40,7 +40,7 @@ entryPoints:
 # Optional
 #
 log:
-  level: WARN 
+  level: INFO 
   format: common
 
 
@@ -102,10 +102,10 @@ providers:
     watch: true
     network: "backbone_proxy"
 
-      #  file:
-      #filename: /etc/traefik/config.yml
-      #watch: true
-      #
+  file:
+    filename: /etc/traefik/dynamic.yml
+    watch: true
+
 #####
 # Server Transport setup
 ####
