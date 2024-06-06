@@ -1,5 +1,3 @@
-version: '3.9'
-
 networks:
   proxy:
     name: backbone_proxy
@@ -10,7 +8,7 @@ networks:
 
 services:
   proxy:
-    image: traefik:v2.10.5
+    image: traefik:v2.11.3
     restart: always
     container_name: reverse_proxy
       #command:
