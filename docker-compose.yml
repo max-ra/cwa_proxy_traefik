@@ -8,18 +8,17 @@ networks:
 
 services:
   proxy:
-    image: traefik:v2.11.3
+    image: traefik:v3.1.6
     restart: always
     container_name: reverse_proxy
-      #command:
-      #- "--providers.file.filename=/traefik.ddyml" 
     labels:
       - traefik.enable=true
       - traefik.docker.network=backbone_proxy
-      - traefik.http.routers.traefik.tls=true
-      - traefik.http.routers.traefik.rule=Host("${APPLICATION_FQDN}")
-      - traefik.http.routers.traefik.service=traefik-dashboard
-      - traefik.http.services.traefik-dashboard.loadbalancer.server.port=8080
+      - traefik.http.routers.dashboard.ruleSyntax=v3
+      - traefik.http.routers.dashboard.tls=true
+      - traefik.http.routers.dashboard.entryPoints=https
+      - traefik.http.routers.dashboard.rule=Host("${APPLICATION_FQDN}") && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
+      - traefik.http.routers.dashboard.service=api@internal
       - prometheus.scrape=true
       - prometheus.port=8080
     ports:
@@ -27,9 +26,13 @@ services:
       - "443:443" 
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - "./traefik/traefik.yml:/etc/traefik/traefik.yml:ro"
+      - "./traefik/conf/:/etc/traefik/:ro"
       - "./traefik/certs:/etc/certs:ro"
-      - "./traefik/dynamic.yml:/etc/traefik/dynamic.yml:ro"
     networks:
       - proxy
       - monitoring
+    healthcheck:
+      test: ["CMD", "traefik", "healthcheck"]
+      interval: 30s
+      timeout: 3s
+      retries: 30
