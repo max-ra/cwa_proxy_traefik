@@ -68,7 +68,7 @@ accessLog:
   # Optional
   # Default: "common"
   #
-  format: json
+  #format: json
 
 ################################################################
 # API and dashboard configuration
