@@ -50,6 +50,7 @@ Thumbs.db
 
 # Docker Container data
 traefik/certs/
+traefik/acme/
 devCA/
 
 # Docker secret files

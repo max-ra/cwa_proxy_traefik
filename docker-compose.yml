@@ -6,11 +6,22 @@ networks:
     name: backbone_monitoring
     external: true
 
+secrets:
+  acme_key:
+    environment: ACME_KEY
+  acme_secret:
+    environment: ACME_SECRET
+  acme_consumer_key:
+    environment: ACME_CONSUMER_KEY
+
 services:
   proxy:
     image: traefik:v3.1.6
     restart: always
     container_name: reverse_proxy
+    command:
+      # OVH DNS-01 ACME resolver setup
+      - "--certificatesresolvers.ovhdns.acme.email=${LETSENCRYPT_MAIL}"
     labels:
       - traefik.enable=true
       - traefik.docker.network=backbone_proxy
@@ -21,6 +32,11 @@ services:
       - traefik.http.routers.dashboard.service=api@internal
       - prometheus.scrape=true
       - prometheus.port=8080
+    environment:
+      OVH_ENDPOINT: ${OVH_ENDPOINT:-ovh-eu}
+      OVH_APPLICATION_KEY_FILE: /run/secret/acme_key
+      OVH_APPLICATION_SECRET_FILE: /run/secret/acme_secret
+      OVH_CONSUMER_KEY_FILE: /run/secret/acme_consumer_key
     ports:
       - "80:80"
       - "443:443" 
@@ -28,6 +44,7 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - "./traefik/conf/:/etc/traefik/:ro"
       - "./traefik/certs:/etc/certs:ro"
+      - "./traefik/acme/:/var/traefik/acme/"
     networks:
       - proxy
       - monitoring

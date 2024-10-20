@@ -124,3 +124,17 @@ metrics:
 core:
   defaultRuleSyntax: v2
 
+
+################################################################
+## ACME Setup
+#################################################################
+
+certificatesresolvers:
+  ovhdns:
+    acme:
+      dnsChallenge:
+        provider: ovh
+      storage: /var/traefik/acme/acme.json
+      caserver: https://acme-staging-v02.api.letsencrypt.org/directory
+
+
