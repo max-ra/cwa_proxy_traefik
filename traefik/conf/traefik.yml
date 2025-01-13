@@ -130,11 +130,17 @@ core:
 #################################################################
 
 certificatesresolvers:
-  ovhdns:
+  ovh:
+    acme:
+      dnsChallenge:
+        provider: ovh
+      storage: /var/traefik/acme/acme.json
+  ovh_staging:
     acme:
       dnsChallenge:
         provider: ovh
       storage: /var/traefik/acme/acme.json
       caserver: https://acme-staging-v02.api.letsencrypt.org/directory
+
 
 
