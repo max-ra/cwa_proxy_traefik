@@ -34,9 +34,9 @@ services:
       - prometheus.port=8080
     environment:
       OVH_ENDPOINT: ${OVH_ENDPOINT:-ovh-eu}
-      OVH_APPLICATION_KEY_FILE: /run/secret/acme_key
-      OVH_APPLICATION_SECRET_FILE: /run/secret/acme_secret
-      OVH_CONSUMER_KEY_FILE: /run/secret/acme_consumer_key
+      OVH_APPLICATION_KEY_FILE: /run/secrets/acme_key
+      OVH_APPLICATION_SECRET_FILE: /run/secrets/acme_secret
+      OVH_CONSUMER_KEY_FILE: /run/secrets/acme_consumer_key
     ports:
       - "80:80"
       - "443:443" 
@@ -45,6 +45,10 @@ services:
       - "./traefik/conf/:/etc/traefik/:ro"
       - "./traefik/certs:/etc/certs:ro"
       - "./traefik/acme/:/var/traefik/acme/"
+    secrets:
+      - acme_key
+      - acme_secret
+      - acme_consumer_key
     networks:
       - proxy
       - monitoring
