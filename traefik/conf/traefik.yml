@@ -1,8 +1,8 @@
 ################################################################
 #
-# Configuration sample for Traefik v2.
+# Configuration sample for Traefik v3.
 #
-# Custom Base template for CWA Applications (MRA 04.11.2022)
+# Custom Base template for CWA Applications (MRA 19.10.2024)
 #
 ################################################################
 
@@ -68,14 +68,14 @@ accessLog:
   # Optional
   # Default: "common"
   #
-#  format: json
+  #format: json
 
 ################################################################
 # API and dashboard configuration
 ################################################################
 
 api:
-  insecure: true
+  insecure: false
   dashboard: true 
 
 ################################################################
@@ -83,13 +83,13 @@ api:
 ################################################################
 
 # Enable ping
-#ping:
+ping:
   # Name of the related entry point
   #
   # Optional
   # Default: "traefik"
   #
-#  entryPoint: traefik
+  entryPoint: traefik
 
 ################################################################
 # Docker configuration backend 
@@ -115,3 +115,32 @@ serversTransport:
 
 metrics:
   prometheus: {}
+
+################################################################
+# Traefik V3 Migration strategy
+# the dnamic sintax will be v2 until every router is migrated to v3
+################################################################
+
+core:
+  defaultRuleSyntax: v2
+
+
+################################################################
+## ACME Setup
+#################################################################
+
+certificatesresolvers:
+  ovh:
+    acme:
+      dnsChallenge:
+        provider: ovh
+      storage: /var/traefik/acme/acme.json
+  ovh_staging:
+    acme:
+      dnsChallenge:
+        provider: ovh
+      storage: /var/traefik/acme/acme.json
+      caserver: https://acme-staging-v02.api.letsencrypt.org/directory
+
+
+
