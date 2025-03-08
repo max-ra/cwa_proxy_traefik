@@ -16,7 +16,7 @@ secrets:
 
 services:
   proxy:
-    image: traefik:v3.3.1
+    image: traefik:v3.3.4
     restart: always
     container_name: reverse_proxy
     command:
