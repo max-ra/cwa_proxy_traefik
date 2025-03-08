@@ -152,8 +152,4 @@ certificatesresolvers:
       httpchallenge:
         entrypoint: http
       storage: /var/traefik/acme/acme.json
-      caserver: https://acme-staging-v02.api.letsencrypt.org/directory
-
-
-
 
