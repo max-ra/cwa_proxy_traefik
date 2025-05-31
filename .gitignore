@@ -55,4 +55,4 @@ devCA/
 
 # Docker secret files
 .env
-
+auth.txt
