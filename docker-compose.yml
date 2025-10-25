@@ -4,6 +4,7 @@ networks:
     external: true
   monitoring:
     name: backbone_monitoring
+    driver: bridge
     external: true
 
 secrets:
