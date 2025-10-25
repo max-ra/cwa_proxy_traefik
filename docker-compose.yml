@@ -16,7 +16,7 @@ secrets:
 
 services:
   proxy:
-    image: traefik:v3.4.1
+    image: traefik:v3.5.2
     restart: always
     container_name: reverse_proxy
     command:
@@ -27,7 +27,6 @@ services:
       - traefik.http.routers.dashboard.middlewares=${MIDDLEWARES:-}
       - traefik.enable=true
       - traefik.docker.network=backbone_proxy
-      - traefik.http.routers.dashboard.ruleSyntax=v3
       - traefik.http.routers.dashboard.tls=true
       - traefik.http.routers.dashboard.tls.certresolver=${CERTRESOLVER:-}
       - traefik.http.routers.dashboard.entryPoints=https
