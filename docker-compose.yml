@@ -4,6 +4,7 @@ networks:
     external: true
   monitoring:
     name: backbone_monitoring
+    driver: ${NET_MON_DRIVER:-bridge}
     external: true
 
 secrets:
@@ -16,7 +17,7 @@ secrets:
 
 services:
   proxy:
-    image: traefik:v3.5.2
+    image: traefik:v3.6.2
     restart: always
     container_name: reverse_proxy
     command:
