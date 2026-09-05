@@ -14,6 +14,10 @@ secrets:
     environment: ACME_SECRET
   acme_consumer_key:
     environment: ACME_CONSUMER_KEY
+  oidc_secret:
+    environment: TRAEFIK_OIDC_AUTH__SECRET
+  oidc_client_secret:
+    environment: TRAEFIK_OIDC_AUTH__CLIENT_SECRET
 
 services:
   proxy:
@@ -40,6 +44,8 @@ services:
       OVH_APPLICATION_KEY_FILE: /run/secrets/acme_key
       OVH_APPLICATION_SECRET_FILE: /run/secrets/acme_secret
       OVH_CONSUMER_KEY_FILE: /run/secrets/acme_consumer_key
+      TRAEFIK_OIDC_AUTH__CLIENT_ID: "${TRAEFIK_OIDC_AUTH__CLIENT_ID:-traefik}"
+      TRAEFIK_OIDC_AUTH__URL: "${TRAEFIK_OIDC_AUTH__URL:-}"
     ports:
       - "80:80"
       - "443:443" 
@@ -52,6 +58,8 @@ services:
       - acme_key
       - acme_secret
       - acme_consumer_key
+      - oidc_secret
+      - oidc_client_secret
     networks:
       - proxy
       - monitoring

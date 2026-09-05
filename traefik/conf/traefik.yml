@@ -144,3 +144,13 @@ certificatesresolvers:
         entrypoint: http
       storage: /var/traefik/acme/acme.json
 
+################################################################
+## Plugin setup
+#################################################################
+
+experimental:
+  plugins:
+    traefik-oidc-auth:
+      moduleName: "github.com/sevensolutions/traefik-oidc-auth"
+      version: "v0.21.0"
+

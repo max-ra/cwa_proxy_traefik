@@ -2,3 +2,28 @@ tls:
   certificates:
     - certFile: /etc/certs/fullchain.pem
       keyFile: /etc/certs/key.pem
+
+http:
+  middlewares:
+    oidc-auth:
+      plugin:
+        traefik-oidc-auth:
+          Scopes: ["openid", "profile"]
+          Secret: "${file:/run/secrets/oidc_secret}"
+          LogLevel: "INFO"
+          Provider:
+            Url: {{ expandenv "$TRAEFIK_OIDC_AUTH__URL"}}
+            ClientId: {{ expandenv "$TRAEFIK_OIDC_AUTH__CLIENT_ID"}}
+            ClientSecret: "${file:/run/secrets/oidc_client_secret}"
+            UsePkce: true
+          Authorization:
+            AssertClaims:
+              - Name: roles
+                AnyOf: ["admin", "access"]
+          Headers:
+            - Name: "X-Oidc-Id"
+              Value: "{{`{{ .claims.sub }}`}}"
+            - Name: "X-Oidc-Name"
+              Value: "{{`{{ .claims.preferred_username }}`}}"
+            - Name: "X-Oidc-Roles"
+              Value: "{{`{{ .claims.roles |  mapToJsonArray }}`}}"
