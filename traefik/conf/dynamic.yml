@@ -5,6 +5,19 @@ tls:
 
 http:
   middlewares:
+    oidc-auth-chain:
+      chain:
+        middlewares:
+          - oidc-remove-header
+          - oidc-auth
+
+    oidc-remove-header:
+      headers:
+        customRequestHeaders:
+          X-Oidc-Id: ""
+          X-Oidc-Name: ""
+          X-Oidc-Roles: ""
+
     oidc-auth:
       plugin:
         traefik-oidc-auth:
