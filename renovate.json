@@ -3,6 +3,7 @@
   "extends": [
     "local>Rauch-IT/renovate-config"
   ],
+  "minimumReleaseAgeBehaviour" : "timestamp-optional",
   "packageRules": [
     {
       "matchUpdateTypes": ["patch"],
